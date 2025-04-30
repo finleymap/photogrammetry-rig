@@ -1,35 +1,49 @@
-# Open-Source Photogrammetry Rig
+# Photogrammetry Rig Project Repository
 
-An open-source, modular photogrammetry system designed to generate accurate 3D reconstructions using affordable, off-the-shelf hardware. This project integrates Raspberry Pi devices, camera calibration methods, and structure-from-motion pipelines to create a reproducible, low-cost solution for 3D capture and reconstruction.
+This repository contains all components necessary to replicate a low-cost, automated photogrammetry rig for generating accurate 3D models using open-source tools and off-the-shelf hardware.
 
-## 📌 Features
+---
 
-- Supports multi-camera rigs using Raspberry Pi boards
-- Accurate intrinsic and extrinsic camera calibration using checkerboard patterns
-- Automated image capture and storage
+## Included Scripts
 
+### Raspberry Pi Scripts (`raspberry_pi/`)
+- **`capture_images.py`**: Captures images at multiple angles using a stepper-motor-controlled turntable and vertical rail. Uses `libcamera-still`.
+- **`generate_masks.py`**: Uses `rembg` and `OpenCV` to generate binary masks from captured images.
 
-## 🛠 Hardware Requirements
+### User Computer Scripts (`user_computer/`)
+- **`automate.py`**: Orchestrates the full process: triggers Raspberry Pi capture, downloads images/masks, runs Meshroom in batch mode, and opens the project.
+- **`calibration.py`**: Calibrates the camera using chessboard images and outputs distortion coefficients and camera matrix.
 
-- Raspberry Pi 4
-- Arducam 64MP or compatible camera modules
-- Laser-cut or 3D-printed rig frame
+---
 
+## 🛠 CAD Model
 
-## 📷 Software Stack
+Located in `/CAD_model/photogrammetry_rig.step`, this file includes the complete 3D assembly of the rig.
 
-- Python (control scripts, camera interface)
-- Meshroom open-source 3D Reconstruction Software based on the AliceVision framework.
-- `libcamera` for image capture
-- `OpenCV` for calibration and image processing
-- `Rembg` for masking background removal
+### Setup Notes:
+- Uses **brass press-fit inserts** for mounting
+- Requires **M2, M3, and M5 bolts** depending on part
+- Camera connects via **CSI ribbon cable** to the Raspberry Pi CSI port
 
+---
 
-## 📦 Installation
+## Sample Data
 
-Clone the repository and install dependencies:
+Located in `/data/`, this includes:
+- A subset of captured images (or a link to OneDrive/Drive)
+- Generated masks
+- Exported model results (.obj or .glb)
 
-```bash
-git clone https://github.com/finleymap/photogrammetry-rig.git
-cd photogrammetry-rig
-pip install -r requirements.txt
+Use this as a reference or baseline to test your own setup.
+
+---
+
+## CCTags Pipeline
+
+Folder `/cctags_pipeline/` includes:
+- A **Meshroom pipeline template** configured to use CCTags
+- A **CCTags printable marker plate** in PDF format
+
+This enables more real-world scaled models.
+
+---
