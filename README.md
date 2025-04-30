@@ -1,3 +1,5 @@
+raspberry_pi/camera_control/README.md
+
 # Open-Source Photogrammetry Rig
 
 An open-source, modular photogrammetry system designed to generate accurate 3D reconstructions using affordable, off-the-shelf hardware. This project integrates Raspberry Pi devices, camera calibration methods, and structure-from-motion pipelines to create a reproducible, low-cost solution for 3D capture and reconstruction.
