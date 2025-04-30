@@ -1,6 +1,3 @@
-# photogrammetry-rig
-Open-source photogrammetry rig using low-cost, off-the-shelf hardware for accurate 3D reconstructions and camera calibration workflows.
-
 # Open-Source Photogrammetry Rig
 
 An open-source, modular photogrammetry system designed to generate accurate 3D reconstructions using affordable, off-the-shelf hardware. This project integrates Raspberry Pi devices, camera calibration methods, and structure-from-motion pipelines to create a reproducible, low-cost solution for 3D capture and reconstruction.
