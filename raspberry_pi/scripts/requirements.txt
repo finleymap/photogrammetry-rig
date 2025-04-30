@@ -1,1 +1,5 @@
-tbc
+pigpio
+numpy
+opencv-python
+Pillow
+rembg
