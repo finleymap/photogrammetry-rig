@@ -1,33 +1,53 @@
 # User Computer Scripts for Photogrammetry Workflow
 
-This folder contains scripts intended to be run on the **host machine** (e.g. your laptop or desktop) that interfaces with the Raspberry Pi photogrammetry rig. These tools manage the end-to-end process of capturing images, generating masks, downloading data, and performing structure-from-motion (SfM) reconstruction using Meshroom.
+This folder contains Python scripts that run on your host computer (e.g., laptop or desktop) and manage the full photogrammetry process using a Raspberry Pi rig and Meshroom.
 
 ---
 
 ## Scripts Overview
 
-### 1. `automate.py`
+### `automate.py`
 
-This is the main automation script. It remotely runs photogrammetry routines on the Raspberry Pi, downloads the output, and kicks off a Meshroom reconstruction pipeline.
-
-#### What It Does:
-- Prompts the user for the number of rotational positions.
-- Connects to the Raspberry Pi via SSH and runs:
-  - `capture_images.py` (image capture script on Pi)
+This script automates the entire photogrammetry pipeline by:
+- Connecting to a Raspberry Pi via SSH
+- Running two remote scripts:
+  - `capture_images.py` (image acquisition)
   - `generate_masks.py` (background removal and mask generation)
-- Downloads the `~/final_output` folder from the Pi.
-- Runs Meshroom in batch mode to compute up to the `StructureFromMotion` node.
-- Opens the resulting `.mg` project in the Meshroom GUI.
+- Downloading the image/mask output from the Pi
+- Launching Meshroom in batch mode to process images up to `StructureFromMotion`
+- Opening the resulting project in Meshroom GUI
 
-#### User Configuration Required:
-You **must update** the following variables at the top of the script:
-- `pi_user` – your Raspberry Pi username (usually `"pi"`)
-- `pi_host` – the IP address of your Raspberry Pi on your network
-- `remote_scripts_path` – the full path to where the Pi scripts are stored (e.g. `/home/pi/scripts`)
-- `meshroom_batch_path` – full path to `meshroom_batch.exe` on your local machine
-- `meshroom_gui_path` – full path to `meshroom.exe` on your local machine
+#### User Configuration
+Edit the following variables in the script to match your setup:
 
-#### Example:
+```python
+pi_user = "pi_username"          # Your Raspberry Pi username
+pi_host = "192.168.x.x"          # IP address of the Pi
+remote_scripts_path = "/home/pi_username/scripts"  # Path on the Pi
+
+meshroom_batch_path = r"C:\Path\To\Meshroom\meshroom_batch.exe"
+meshroom_gui_path = r"C:\Path\To\Meshroom\meshroom.exe"
+
+### `calibration.py`
+
+This script performs **intrinsic camera calibration** using chessboard images stored locally.
+
+#### What It Does
+- Searches for calibration images in the `calibration_images/` folder.
+- Detects a 4×5 chessboard pattern (can be adjusted).
+- Computes camera intrinsics and distortion coefficients.
+- Saves:
+  - `camera_matrix.txt`
+  - `distortion_coefficients.txt`
+  - Annotated checkerboard images in `output/`
+  - A `calibration_report.txt` with reprojection error
+
+#### User Configuration
+- **CHESSBOARD_SIZE**: Update this if your calibration board has a different number of inner corners.
+- **SQUARE_SIZE**: Update if your checkerboard square size is not 2 cm.
+- **CALIBRATION_IMAGES_PATH**: Ensure images are placed in `calibration_images/`.
+
+#### Example Usage
 ```bash
-python automate.py
+python calibration.py
 
