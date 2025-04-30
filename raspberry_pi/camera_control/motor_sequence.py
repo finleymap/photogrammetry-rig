@@ -66,19 +66,22 @@ def rotate_motor2_with_stops(num_stops, position_index):
         image_name = f"pos{position_index}_img{str(i + 1).zfill(2)}.jpg"
         image_path = os.path.join(save_folder, image_name)
 
-        # Capture Image
+        # Capture Image       
+        print(f"Capturing: {image_name} - 12MP")
         try:
             subprocess.run([
                 "libcamera-still",
-                "-t", "1000",
-                "--autofocus-mode", "manual",
+                "--width", "4056",
+                "--height", "3040",
+                "--shutter", "33333",      # ~1/30s
+                "--gain", "4",             # Approx ISO 400
                 "--lens-position", "9",
-                "--denoise", "cdn_off",
-                "--roi", "0.15,0.15,0.7,0.7",
+                "--nopreview",
                 "-o", image_path
             ], check=True)
+
         except subprocess.CalledProcessError as e:
-            print(f"❌ Camera capture failed at segment {i + 1}: {e}")
+            print(f"Camera capture failed at segment {i + 1}: {e}")
 
         # Pause after each capture
         time.sleep(0.5)
