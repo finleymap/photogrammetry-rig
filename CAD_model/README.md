@@ -4,7 +4,7 @@ This repository includes a complete 3D model of the photogrammetry rig used for 
 
 ---
 
-### 📁 File Overview
+### File Overview
 
 - **File:** `photogrammetry_rig.step`
 - **Format:** STEP AP214 (.step)
@@ -22,8 +22,6 @@ To build the physical rig based on this model, you will need:
   - M2 bolts (for camera mounting)
   - M3 bolts (for most structural parts)
   - M5 bolts (for frame or large-load joints)
-
-> Ensure bolt lengths match the depth of your parts. Thread-locking compound is optional but can help secure high-vibration joints.
 
 #### Electronics:
 - **Camera:** Connect to the Raspberry Pi using the **CSI ribbon cable** and plug into the **CSI port** on the Pi (located near the HDMI ports).
