@@ -17,10 +17,10 @@ The marker plate is designed for flat-plane photogrammetry, with the markers arr
 
 | Tag ID | Position (mm)  | Notes                 |
 |--------|----------------|------------------------|
-| 1      | (x=+0.5, z=0)  | Right side of origin   |
-| 2      | (x=0, z=+0.5)  | Front of origin        |
-| 3      | (x=-0.5, z=0)  | Left side of origin    |
-| 4      | (x=0, z=-0.5)  | Back of origin         |
+| 1      | (x=+0.05, z=0)  | Right side of origin   |
+| 2      | (x=0, z=+0.05)  | Front of origin        |
+| 3      | (x=-0.05, z=0)  | Left side of origin    |
+| 4      | (x=0, z=-0.05)  | Back of origin         |
 
 > **Note**: This layout assumes the markers lie on a flat horizontal plane, with **X and Z** axes defining that plane and **Y** as the vertical axis.
 
@@ -41,6 +41,6 @@ The tag positions are encoded so Meshroom can reliably determine camera pose whe
 
 - Place the marker plate flat and level in your capture area
 - Ensure at least **3 markers are visible** in most camera angles
-- Keep the plate size to scale with the 0.5 unit spacing (e.g., 500 mm = 0.5 m)
+- Keep the plate size to scale with the 0.05 unit spacing (e.g., 50 mm)
 
 ---
