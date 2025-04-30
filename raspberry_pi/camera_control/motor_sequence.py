@@ -35,7 +35,7 @@ except ValueError:
     print("Invalid input.")
     exit()
 
-# Initialize pigpio
+# Initialise pigpio
 pi = pigpio.pi()
 if not pi.connected:
     print("Could not connect to pigpio daemon.")
@@ -47,7 +47,7 @@ for pin in [STEP1, DIR1, STEP2, DIR2]:
 pi.set_mode(LIMIT_SWITCH_PIN, pigpio.INPUT)
 pi.set_pull_up_down(LIMIT_SWITCH_PIN, pigpio.PUD_UP)
 
-# ===== Safety & Motion Helpers =====
+# Safety
 def check_emergency_stop():
     if pi.read(LIMIT_SWITCH_PIN) == 0:
         raise Exception("Emergency stop triggered: limit switch pressed unexpectedly!")
@@ -97,9 +97,9 @@ def rotate_motor2_with_stops(num_stops, position_index):
 
     print("Motor 2 full rotation and capture complete.\n")
 
-# ===== Main Sequence =====
+# Main Sequence
 try:
-    print("Homing Motor 1 (toward limit switch)...")
+    print("Setting Datum (toward limit switch)...")
     pi.write(DIR1, 1)
     while pi.read(LIMIT_SWITCH_PIN) != 0:
         pi.write(STEP1, 1)
