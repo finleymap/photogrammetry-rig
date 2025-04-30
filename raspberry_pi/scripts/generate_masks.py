@@ -5,8 +5,10 @@ import numpy as np
 from PIL import Image
 from rembg import remove
 
-input_folder = "/home/finley/final_output/images"
-output_folder = "/home/finley/final_output/masks"
+# Input/output paths using current user's home directory
+base_folder = os.path.join(os.path.expanduser("~"), "final_output")
+input_folder = os.path.join(base_folder, "images")
+output_folder = os.path.join(base_folder, "masks")
 os.makedirs(output_folder, exist_ok=True)
 
 dilation_radius = 5
