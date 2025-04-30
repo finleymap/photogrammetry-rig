@@ -26,6 +26,15 @@ timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 save_folder = os.path.expanduser(f"~/Pictures/photogrammetry_{timestamp}")
 os.makedirs(save_folder, exist_ok=True)
 
+# Prompt user for number of images per turntable rotation
+try:
+    num_stops = int(input("Enter number of images per 360° turntable rotation: "))
+    if num_stops <= 0 or num_stops > STEPS_PER_REV:
+        raise ValueError
+except ValueError:
+    print("Invalid input.")
+    exit()
+
 # Initialize pigpio
 pi = pigpio.pi()
 if not pi.connected:
@@ -54,10 +63,10 @@ def step_motor(step_pin, dir_pin, steps, direction, delay_us):
 
 def rotate_motor2_with_stops(num_stops, position_index):
     steps_per_segment = STEPS_PER_REV // num_stops
-    print(f"🔄 Rotating Motor 2: 360° with {num_stops} stops...")
+    print(f"Rotating Motor 2: 360° with {num_stops} stops...")
 
     for i in range(num_stops):
-        print(f" 📸 Segment {i + 1} of {num_stops} — capturing image")
+        print(f"Segment {i + 1} of {num_stops} — capturing image")
 
         # Step Motor 2
         step_motor(STEP2, DIR2, steps_per_segment, direction=1, delay_us=STEP_DELAY_US)
@@ -90,7 +99,7 @@ def rotate_motor2_with_stops(num_stops, position_index):
 
 # ===== Main Sequence =====
 try:
-    print("🏁 Homing Motor 1 (toward limit switch)...")
+    print("Homing Motor 1 (toward limit switch)...")
     pi.write(DIR1, 1)
     while pi.read(LIMIT_SWITCH_PIN) != 0:
         pi.write(STEP1, 1)
@@ -101,7 +110,7 @@ try:
     print("Limit switch reached — position set to 0 (datum)")
     time.sleep(0.5)
 
-    print("⬅️ Backing off limit switch until released...")
+    print("Backing off limit switch until released...")
     pi.write(DIR1, 0)
     while pi.read(LIMIT_SWITCH_PIN) == 0:
         pi.write(STEP1, 1)
@@ -113,25 +122,25 @@ try:
     time.sleep(0.5)
 
     # Move to Position 1 (1000 steps)
-    print("➡️ Moving Motor 1 to Position 1 (1000 steps)...")
+    print("Moving Motor 1 to Position 1 (1000 steps)...")
     step_motor(STEP1, DIR1, INITIAL_OFFSET, direction=0, delay_us=STEP_DELAY_US)
 
-    print("⏸ Pausing before Motor 2 rotation...")
+    print("Pausing before Motor 2 rotation...")
     time.sleep(1)
 
-    print("🔄 Running Motor 2 at Position 1...")
-    rotate_motor2_with_stops(num_stops=30, position_index=1)
+    print("Running Motor 2 at Position 1...")
+    rotate_motor2_with_stops(num_stops=num_stops, position_index=1)
 
     # Move to Position 2 and 3
     for pos in range(2, 4):
-        print(f"➡️ Moving Motor 1 to Position {pos} ({STEP_BETWEEN_POSITIONS} steps)...")
+        print(f"Moving Motor 1 to Position {pos} ({STEP_BETWEEN_POSITIONS} steps)...")
         step_motor(STEP1, DIR1, STEP_BETWEEN_POSITIONS, direction=1, delay_us=STEP_DELAY_US)
 
-        print("⏸ Pausing before Motor 2 rotation...")
+        print("Pausing before Motor 2 rotation...")
         time.sleep(0.5)
 
-        print(f"🔄 Running Motor 2 at Position {pos}...")
-        rotate_motor2_with_stops(num_stops=30, position_index=pos)
+        print(f"Running Motor 2 at Position {pos}...")
+        rotate_motor2_with_stops(num_stops=num_stops, position_index=pos)
 
     print("Sequence complete. All images captured.")
 
