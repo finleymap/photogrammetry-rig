@@ -2,7 +2,6 @@ import subprocess
 import os
 import sys
 import time
-from tqdm import tqdm  # for progress bars
 
 # === CONFIG ===
 pi_user = "pi_username"  # Replace with your Pi's username
@@ -51,13 +50,11 @@ if os.path.exists(local_save_path):
     print("Existing 'final_output' folder found. Removing...")
     subprocess.run(["rm", "-rf", local_save_path])
 
-with tqdm(total=1, desc="Downloading files", bar_format='{l_bar}{bar}| {elapsed}') as pbar:
-    subprocess.run([
-        "scp", "-r",
-        f"{pi_user}@{pi_host}:{remote_output_path}",
-        local_save_path
-    ], check=True)
-    pbar.update(1)
+subprocess.run([
+    "scp", "-r",
+    f"{pi_user}@{pi_host}:{remote_output_path}",
+    local_save_path
+], check=True)
 download_end = time.time()
 
 # === Step 4: Run Meshroom batch to compute up to SfM ===
@@ -91,3 +88,4 @@ print(f"Download time: {download_end - download_start:.2f} seconds")
 print(f"Meshroom compute (CameraInit to SfM) time: {meshroom_end - meshroom_start:.2f} seconds")
 print(f"Total process time: {overall_end - overall_start:.2f} seconds")
 print("\nAll steps completed successfully.")
+
