@@ -30,6 +30,6 @@ An open-source, modular photogrammetry system designed to generate accurate 3D r
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/<your-username>/photogrammetry-rig.git
+git clone https://github.com/finleymap/photogrammetry-rig.git
 cd photogrammetry-rig
 pip install -r requirements.txt
