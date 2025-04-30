@@ -25,8 +25,16 @@ pi_user = "pi_username"          # Your Raspberry Pi username
 pi_host = "192.168.x.x"          # IP address of the Pi
 remote_scripts_path = "/home/pi_username/scripts"  # Path on the Pi
 
-meshroom_batch_path = r"C:\Path\To\Meshroom\meshroom_batch.exe"
-meshroom_gui_path = r"C:\Path\To\Meshroom\meshroom.exe"
+meshroom_batch_path = r"C:\\Path\\To\\Meshroom\\meshroom_batch.exe"
+meshroom_gui_path = r"C:\\Path\\To\\Meshroom\\meshroom.exe"
+```
+
+#### How to Use
+```bash
+python automate.py
+```
+
+---
 
 ### `calibration.py`
 
@@ -50,4 +58,59 @@ This script performs **intrinsic camera calibration** using chessboard images st
 #### Example Usage
 ```bash
 python calibration.py
+```
+
+---
+
+## Requirements
+
+Install dependencies using:
+
+```bash
+pip install -r requirements.txt
+```
+
+**`requirements.txt`:**
+```
+numpy
+opencv-python
+```
+
+> `automate.py` uses only Python’s built-in standard libraries.
+
+---
+
+## Output Structure
+
+After running the pipeline, you will have:
+
+```
+~/final_output/
+├── images/     # Captured photos
+├── masks/      # Generated masks
+└── project.mg  # Meshroom project
+```
+
+Calibration output will be saved to:
+
+```
+output/
+├── corners_*.jpg
+├── camera_matrix.txt
+├── distortion_coefficients.txt
+└── calibration_report.txt
+```
+
+---
+
+## Notes
+
+- Make sure SSH access is set up between your computer and the Raspberry Pi.
+- Meshroom must be installed, and executable paths must be correctly set in `automate.py`.
+
+---
+
+## License
+
+MIT License — free to use and modify with attribution.
 
