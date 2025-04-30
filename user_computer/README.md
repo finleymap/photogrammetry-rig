@@ -109,8 +109,3 @@ output/
 - Meshroom must be installed, and executable paths must be correctly set in `automate.py`.
 
 ---
-
-## License
-
-MIT License — free to use and modify with attribution.
-
