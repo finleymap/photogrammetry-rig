@@ -41,7 +41,7 @@ pi.set_pull_up_down(LIMIT_SWITCH_PIN, pigpio.PUD_UP)
 # ===== Safety & Motion Helpers =====
 def check_emergency_stop():
     if pi.read(LIMIT_SWITCH_PIN) == 0:
-        raise Exception("❗ Emergency stop triggered: limit switch pressed unexpectedly!")
+        raise Exception("Emergency stop triggered: limit switch pressed unexpectedly!")
 
 def step_motor(step_pin, dir_pin, steps, direction, delay_us):
     pi.write(dir_pin, direction)
@@ -130,7 +130,7 @@ try:
         print(f"🔄 Running Motor 2 at Position {pos}...")
         rotate_motor2_with_stops(num_stops=30, position_index=pos)
 
-    print("✅ Sequence complete. All images captured.")
+    print("Sequence complete. All images captured.")
 
 except KeyboardInterrupt:
     print("Stopped by user.")
